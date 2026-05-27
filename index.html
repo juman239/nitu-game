@@ -38,30 +38,19 @@
             z-index: 50;
         }
 
-        /* The Character Container */
+        /* The Character Container (Animation removed so he stays still) */
         #character-wrapper {
             position: relative;
-            animation: dodgeSideToSide 2.5s infinite alternate ease-in-out;
             cursor: pointer;
-        }
-
-        #character-wrapper.dead {
-            animation: none; /* Stop moving when dead */
         }
 
         /* The Video Player */
         #character-video {
             width: 300px; /* Adjust size of your video here */
             height: auto;
-            border-radius: 15px; /* Rounds the corners of your video */
+            border-radius: 15px; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            pointer-events: none; /* Let the clicks pass to the wrapper */
-        }
-
-        /* Side to Side Animation Rules */
-        @keyframes dodgeSideToSide {
-            0% { transform: translateX(-100px); }
-            100% { transform: translateX(100px); }
+            pointer-events: none; 
         }
 
         /* Poo Punch Animation */
@@ -143,7 +132,7 @@
         const pooPunch = document.getElementById('poo-punch');
         const rewardScreen = document.getElementById('reward-screen');
 
-        // Video Sources (Make sure filenames match exactly!)
+        // Video Sources
         const VIDEO_NORMAL = 'normal.mp4';
         const VIDEO_MOCKING = 'mocking.mp4';
         const VIDEO_HIT = 'hit.mp4';
@@ -156,7 +145,7 @@
             // Switch to mocking video
             videoPlayer.src = VIDEO_MOCKING; 
             
-            // Go back to normal after 2 seconds (adjust based on how long your mocking video is)
+            // Go back to normal after 2 seconds
             setTimeout(() => {
                 if (!isDead && !isHit) {
                     videoPlayer.src = VIDEO_NORMAL;
@@ -181,7 +170,7 @@
                 clearInterval(mockInterval);
                 triggerDeathSequence();
             } else {
-                // Recover from the hit after 1 second (adjust based on hit video length)
+                // Recover from the hit after 1 second
                 setTimeout(() => {
                     if (!isDead) {
                         videoPlayer.src = VIDEO_NORMAL;
@@ -194,18 +183,16 @@
 
         // 3. Falling down and showing the reward
         function triggerDeathSequence() {
-            characterWrapper.classList.add('dead'); // Stops the dodging animation
             pooPunch.classList.remove('hit');
 
             // Play the falling back/dead video
             videoPlayer.src = VIDEO_DEAD;
-            // Turn off loop so he stays dead at the end of the clip
-            videoPlayer.loop = false; 
+            videoPlayer.loop = false; // Turn off loop so he stays dead at the end of the clip
 
-            // Wait a few seconds for the falling video to finish playing before showing the reward
+            // Wait 2.5 seconds for the falling video to finish playing before showing the reward
             setTimeout(() => {
                 rewardScreen.style.display = 'flex';
-            }, 2500); // 2.5 seconds (adjust based on dead video length)
+            }, 2500); 
         }
     </script>
 </body>
